@@ -1,0 +1,29 @@
+{
+  "name": "casalavoropro-lead-outreach",
+  "version": "1.0.0",
+  "description": "Sistema autonomo di Lead Generation & Outreach (WhatsApp & Email B2B) per CasaLavoroPRO",
+  "main": "scraper.py",
+  "scripts": {
+    "scrape": "python scraper.py",
+    "scrape:preset": "python scraper.py --preset",
+    "outreach": "python outreach.py --serve",
+    "outreach:email": "python outreach.py --send-emails",
+    "outreach:dryrun": "python outreach.py --send-emails --dry-run",
+    "stats": "python outreach.py --stats",
+    "app": "python main.py",
+    "app:gui": "python app_gui.py",
+    "app:tk": "python app_tkinter.py",
+    "build:exe": "build_exe.bat"
+  },
+  "keywords": [
+    "scraper",
+    "lead generation",
+    "google maps",
+    "outreach",
+    "whatsapp",
+    "email b2b",
+    "casalavoropro"
+  ],
+  "author": "CasaLavoroPRO",
+  "license": "ISC"
+}

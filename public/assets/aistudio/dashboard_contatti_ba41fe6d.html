@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Outreach Artigiani — CasaLavoroPRO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-bg: #1e293b;
+      --border-color: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary-orange: #ea580c;
+      --primary-orange-hover: #c2410c;
+      --whatsapp-green: #22c55e;
+      --whatsapp-green-hover: #16a34a;
+      --blue-accent: #3b82f6;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      padding: 24px;
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 28px;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-badge {
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      color: white;
+      font-weight: 800;
+      font-size: 20px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      box-shadow: 0 4px 14px rgba(234, 88, 12, 0.4);
+    }
+    .logo-title h1 {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    .logo-title p {
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+    .header-actions {
+      display: flex;
+      gap: 12px;
+    }
+    .btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: none;
+      transition: all 0.2s;
+    }
+    .btn-secondary {
+      background-color: #334155;
+      color: white;
+    }
+    .btn-secondary:hover {
+      background-color: #475569;
+    }
+    /* Stat Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    .stat-label {
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .stat-value {
+      font-size: 28px;
+      font-weight: 800;
+    }
+    .val-orange { color: #f97316; }
+    .val-green { color: #22c55e; }
+    .val-blue { color: #38bdf8; }
+    .val-purple { color: #c084fc; }
+    /* Filter Bar */
+    .filter-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .filter-group {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .search-input {
+      background-color: #0f172a;
+      border: 1px solid var(--border-color);
+      color: white;
+      padding: 9px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      min-width: 260px;
+      outline: none;
+    }
+    .search-input:focus {
+      border-color: var(--primary-orange);
+    }
+    .select-filter {
+      background-color: #0f172a;
+      border: 1px solid var(--border-color);
+      color: white;
+      padding: 9px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+    }
+    /* Table */
+    .table-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+    th {
+      background-color: #172033;
+      color: var(--text-muted);
+      padding: 14px 18px;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.8px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    td {
+      padding: 14px 18px;
+      border-bottom: 1px solid #293548;
+      vertical-align: middle;
+    }
+    tr:hover td {
+      background-color: #243044;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .badge-mobile {
+      background-color: rgba(34, 197, 94, 0.15);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+    .badge-fixed {
+      background-color: rgba(148, 163, 184, 0.15);
+      color: #94a3b8;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+    }
+    .badge-status-sent {
+      background-color: rgba(34, 197, 94, 0.2);
+      color: #22c55e;
+      border: 1px solid #22c55e;
+    }
+    .badge-status-todo {
+      background-color: rgba(249, 115, 22, 0.15);
+      color: #fb923c;
+      border: 1px solid rgba(249, 115, 22, 0.4);
+    }
+    .btn-wa {
+      background-color: var(--whatsapp-green);
+      color: white;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      transition: all 0.2s;
+      box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+    }
+    .btn-wa:hover {
+      background-color: var(--whatsapp-green-hover);
+      transform: translateY(-1px);
+    }
+    .btn-wa.sent {
+      background-color: #334155;
+      color: #94a3b8;
+      box-shadow: none;
+      cursor: default;
+    }
+    .btn-email {
+      background-color: #2563eb;
+      color: white;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-email:hover {
+      background-color: #1d4ed8;
+    }
+    .website-link {
+      color: #38bdf8;
+      text-decoration: none;
+      font-size: 12px;
+    }
+    .website-link:hover {
+      text-decoration: underline;
+    }
+    .actions-cell {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .mark-btn {
+      background: transparent;
+      border: 1px solid #475569;
+      color: #cbd5e1;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .mark-btn:hover {
+      background: #334155;
+      color: white;
+    }
+    /* Notification Toast */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #1e293b;
+      border: 1px solid var(--whatsapp-green);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      font-size: 14px;
+      font-weight: 600;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 1000;
+    }
+    #toast.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo-container">
+        <div class="logo-badge">CLP</div>
+        <div class="logo-title">
+          <h1>CasaLavoroPRO — Outreach Console</h1>
+          <p>Dispatcher autonomo WhatsApp Click-to-Chat & Email B2B</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-secondary" onclick="exportUpdatedCSV()">Scarica Registro Aggiornato</button>
+        <button class="btn btn-secondary" onclick="window.location.reload()">Ricarica Dati</button>
+      </div>
+    </header>
+
+    <!-- Statistiche Superiori -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-label">Artigiani Estratti</span>
+        <span class="stat-value" id="stat-totale">3</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Cellulari (WhatsApp)</span>
+        <span class="stat-value val-green" id="stat-cellulari">2</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Email Trovate</span>
+        <span class="stat-value val-blue" id="stat-email">2</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">WhatsApp Inviati</span>
+        <span class="stat-value val-purple" id="stat-wa-inviati">1</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Da Contattare</span>
+        <span class="stat-value val-orange" id="stat-da-contattare">1</span>
+      </div>
+    </div>
+
+    <!-- Filtri e Ricerca -->
+    <div class="filter-panel">
+      <div class="filter-group">
+        <input type="text" id="searchInput" class="search-input" placeholder="Cerca attività, categoria o città..." oninput="filterTable()">
+        <select id="categoryFilter" class="select-filter" onchange="filterTable()">
+          <option value="">Tutte le categorie</option>
+        </select>
+        <select id="cityFilter" class="select-filter" onchange="filterTable()">
+          <option value="">Tutte le città</option>
+        </select>
+        <select id="statusFilter" class="select-filter" onchange="filterTable()">
+          <option value="all">Tutti i contatti</option>
+          <option value="todo" selected>Da Contattare (WhatsApp)</option>
+          <option value="sent">Già Contattati (WhatsApp)</option>
+          <option value="has_email">Con Email B2B</option>
+        </select>
+      </div>
+      <div style="font-size: 13px; color: var(--text-muted);">
+        Mostrati: <strong id="visibleCount" style="color: white;">0</strong>
+      </div>
+    </div>
+
+    <!-- Tabella Artigiani -->
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>Attività</th>
+            <th>Categoria & Città</th>
+            <th>Telefono</th>
+            <th>Email</th>
+            <th>Sito Web</th>
+            <th>Stato WhatsApp</th>
+            <th>Azione Rapida</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- Righe iniettate via JavaScript -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="toast">Messaggio registrato</div>
+
+  <script>
+    const artisans = [{"id": 1, "nome_attivita": "MM Idroservice SRL", "categoria": "Idraulico", "citta": "Vicenza", "telefono": "+39 0444 534088", "tipo_telefono": "fisso", "email": "info@mmidroservicesrl.com", "sito_web": "https://www.mmidroservicesrl.it", "whatsapp_url": "", "wa_contacted": false, "wa_date": "", "em_contacted": false, "em_date": ""}, {"id": 2, "nome_attivita": "Battaggia Corrado Condizionamento e Termoidraulica", "categoria": "Idraulico", "citta": "Vicenza", "telefono": "+39 338 825 9384", "tipo_telefono": "cellulare", "email": "", "sito_web": "", "whatsapp_url": "https://wa.me/393388259384?text=Ciao%20Battaggia%20Corrado%20Condizionamento%20e%20Termoidraulica%2C%20sono%20Marco%20di%20CasaLavoroPRO.%20Ho%20notato%20la%20tua%20attivit%C3%A0%20di%20Idraulico%20a%20Vicenza.%20Stiamo%20inserendo%20gratuitamente%20i%20migliori%20professionisti%20della%20zona%20sulla%20nostra%20piattaforma%20per%20metterli%20in%20contatto%20diretto%20con%20clienti%20locali%20che%20cercano%20lavori%20di%20casa%2C%20senza%20gettoni%20e%20senza%20commissioni%20sui%20preventivi.%20Puoi%20vedere%20il%20sito%20qui%3A%20casalavoropro.com.%20Se%20vuoi%20farti%20trovare%20gratis%2C%20ti%20inserisco%20o%20puoi%20registrarti%20in%202%20minuti.%20Buon%20lavoro%21", "wa_contacted": true, "wa_date": "2026-11-09 20:23:23", "em_contacted": false, "em_date": ""}, {"id": 3, "nome_attivita": "Mg Termoidraulica", "categoria": "Idraulico", "citta": "Vicenza", "telefono": "+39 345 232 7061", "tipo_telefono": "cellulare", "email": "info@mgtermoidraulica.net", "sito_web": "https://www.mgtermoidraulicamaiogiuseppe.it", "whatsapp_url": "https://wa.me/393452327061?text=Ciao%20Mg%20Termoidraulica%2C%20sono%20Marco%20di%20CasaLavoroPRO.%20Ho%20notato%20la%20tua%20attivit%C3%A0%20di%20Idraulico%20a%20Vicenza.%20Stiamo%20inserendo%20gratuitamente%20i%20migliori%20professionisti%20della%20zona%20sulla%20nostra%20piattaforma%20per%20metterli%20in%20contatto%20diretto%20con%20clienti%20locali%20che%20cercano%20lavori%20di%20casa%2C%20senza%20gettoni%20e%20senza%20commissioni%20sui%20preventivi.%20Puoi%20vedere%20il%20sito%20qui%3A%20casalavoropro.com.%20Se%20vuoi%20farti%20trovare%20gratis%2C%20ti%20inserisco%20o%20puoi%20registrarti%20in%202%20minuti.%20Buon%20lavoro%21", "wa_contacted": false, "wa_date": "", "em_contacted": false, "em_date": ""}];
+
+    // Popola i filtri di categoria e città
+    function initFilters() {
+      const categories = [...new Set(artisans.map(a => a.categoria).filter(Boolean))].sort();
+      const cities = [...new Set(artisans.map(a => a.citta).filter(Boolean))].sort();
+
+      const catSelect = document.getElementById('categoryFilter');
+      categories.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c;
+        opt.textContent = c;
+        catSelect.appendChild(opt);
+      });
+
+      const citySelect = document.getElementById('cityFilter');
+      cities.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c;
+        opt.textContent = c;
+        citySelect.appendChild(opt);
+      });
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    // Invia segnale al backend (se attivo) o salva in localStorage
+    async function markContacted(artisanId, channel = 'WHATSAPP') {
+      const art = artisans.find(a => a.id === artisanId);
+      if (!art) return;
+
+      art.wa_contacted = true;
+      art.wa_date = new Date().toLocaleString('it-IT');
+
+      // 1. Chiamata API locale (se server Python attivo)
+      try {
+        await fetch('/api/mark_contacted', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            nome_attivita: art.nome_attivita,
+            canale: channel,
+            destinatario: art.telefono,
+            note: 'Inviato da console web WhatsApp'
+          })
+        });
+      } catch (err) {
+        console.log('Server locale non raggiungibile, salvo in locale');
+      }
+
+      // 2. Salva in localStorage per persistenza standalone
+      const saved = JSON.parse(localStorage.getItem('casalavoro_sent') || '[]');
+      if (!saved.includes(art.telefono)) {
+        saved.push(art.telefono);
+        localStorage.setItem('casalavoro_sent', JSON.stringify(saved));
+      }
+
+      showToast(`Segnato come contattato: ${art.nome_attivita}`);
+      updateStats();
+      renderTable();
+    }
+
+    function openWhatsApp(artisanId, waUrl) {
+      window.open(waUrl, '_blank');
+      markContacted(artisanId, 'WHATSAPP');
+    }
+
+    function updateStats() {
+      const sentWa = artisans.filter(a => a.wa_contacted).length;
+      const todoWa = artisans.filter(a => !a.wa_contacted && a.tipo_telefono === 'cellulare').length;
+      document.getElementById('stat-wa-inviati').textContent = sentWa;
+      document.getElementById('stat-da-contattare').textContent = todoWa;
+    }
+
+    function filterTable() {
+      renderTable();
+    }
+
+    function renderTable() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const cat = document.getElementById('categoryFilter').value;
+      const city = document.getElementById('cityFilter').value;
+      const status = document.getElementById('statusFilter').value;
+
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = '';
+
+      let count = 0;
+      artisans.forEach(a => {
+        // Filtro ricerca testo
+        const matchSearch = !search || 
+          a.nome_attivita.toLowerCase().includes(search) ||
+          a.categoria.toLowerCase().includes(search) ||
+          a.citta.toLowerCase().includes(search) ||
+          (a.telefono && a.telefono.includes(search));
+
+        // Filtro categoria e città
+        const matchCat = !cat || a.categoria === cat;
+        const matchCity = !city || a.citta === city;
+
+        // Filtro stato
+        let matchStatus = true;
+        if (status === 'todo') {
+          matchStatus = !a.wa_contacted && a.tipo_telefono === 'cellulare';
+        } else if (status === 'sent') {
+          matchStatus = a.wa_contacted;
+        } else if (status === 'has_email') {
+          matchStatus = Boolean(a.email);
+        }
+
+        if (matchSearch && matchCat && matchCity && matchStatus) {
+          count++;
+          const tr = document.createElement('tr');
+
+          // Tipo telefono badge
+          const isMobile = a.tipo_telefono === 'cellulare';
+          const telBadge = isMobile 
+            ? '<span class="badge badge-mobile">Cellulare</span>'
+            : '<span class="badge badge-fixed">Fisso</span>';
+
+          // Stato WhatsApp badge
+          const statusBadge = a.wa_contacted
+            ? `<span class="badge badge-status-sent">Inviato (${a.wa_date || 'Registrato'})</span>`
+            : `<span class="badge badge-status-todo">Da inviare</span>`;
+
+          // Bottone WhatsApp
+          let actionBtn = '';
+          if (isMobile && a.whatsapp_url) {
+            actionBtn = `<button class="btn-wa" onclick="openWhatsApp(${a.id}, '${a.whatsapp_url}')">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+              Invia WhatsApp
+            </button>`;
+          } else {
+            actionBtn = `<span style="color: var(--text-muted); font-size: 12px;">Solo fisso o n/d</span>`;
+          }
+
+          // Tasto rapido segna manuale
+          const toggleBtn = `<button class="mark-btn" onclick="markContacted(${a.id}, 'WHATSAPP')">
+            ${a.wa_contacted ? '✔ Inviato' : 'Segna fatto'}
+          </button>`;
+
+          tr.innerHTML = `
+            <td>
+              <strong>${a.nome_attivita}</strong>
+            </td>
+            <td>
+              <div>${a.categoria}</div>
+              <div style="font-size: 12px; color: var(--text-muted);">${a.citta}</div>
+            </td>
+            <td>
+              <div>${a.telefono || '<span style="color:#64748b">Nessuno</span>'}</div>
+              <div style="margin-top: 3px;">${telBadge}</div>
+            </td>
+            <td>
+              ${a.email 
+                ? `<a href="mailto:${a.email}" class="btn-email">✉ ${a.email}</a>` 
+                : '<span style="color:#64748b; font-size:12px;">Non trovata</span>'}
+            </td>
+            <td>
+              ${a.sito_web 
+                ? `<a href="${a.sito_web}" target="_blank" class="website-link">Visita sito ↗</a>` 
+                : '<span style="color:#64748b; font-size:12px;">-</span>'}
+            </td>
+            <td>${statusBadge}</td>
+            <td>
+              <div class="actions-cell">
+                ${actionBtn}
+                ${toggleBtn}
+              </div>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        }
+      });
+
+      document.getElementById('visibleCount').textContent = count;
+    }
+
+    function exportUpdatedCSV() {
+      const headers = ['nome_attivita', 'categoria', 'citta', 'telefono', 'email', 'stato_whatsapp', 'data_contatto'];
+      const rows = artisans.map(a => [
+        `"${a.nome_attivita.replace(/"/g, '""')}"`,
+        `"${a.categoria}"`,
+        `"${a.citta}"`,
+        `"${a.telefono}"`,
+        `"${a.email}"`,
+        a.wa_contacted ? 'INVIATO' : 'DA_INVIARE',
+        `"${a.wa_date || ''}"`
+      ]);
+
+      const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', 'registro_whatsapp_esportato.csv');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Inizializza al caricamento
+    window.addEventListener('DOMContentLoaded', () => {
+      initFilters();
+      renderTable();
+    });
+  </script>
+</body>
+</html>

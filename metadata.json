@@ -1,0 +1,6 @@
+{
+  "name": "CasaLavoroPRO & XPart Suite",
+  "description": "Lead Generation, Bozze Supabase & Outreach Suite (WhatsApp, Email Chrome, Anti-Doppio Invio, XPart OEM)",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
