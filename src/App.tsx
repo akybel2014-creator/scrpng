@@ -20,6 +20,7 @@ import {
   FlaskConical,
   RefreshCw,
   Send,
+  Eraser,
 } from 'lucide-react';
 import {
   CATEGORIE_RAGGRUPPATE,
@@ -528,6 +529,13 @@ WhatsApp: ${cleanPhone}`;
     showToast('Arresto ricerca eseguito');
   };
 
+  const clearScrapingView = () => {
+    setArtisans([]);
+    setProgressCount(0);
+    setProgressStatus('');
+    showToast('Schermata di scraping pulita');
+  };
+
   const startXpartPreviewScraping = () => {
     setIsXpartScraping(true);
     setXpartProgressCount(0);
@@ -844,6 +852,16 @@ WhatsApp: ${cleanPhone}`;
                     Interrompi
                   </button>
                 )}
+
+                <button
+                  type="button"
+                  onClick={clearScrapingView}
+                  title="Svuota solo la tabella a schermo senza cancellare i file CSV o Supabase"
+                  className="bg-[#1e293b] hover:bg-[#334155] border border-[#334155] text-white px-3.5 h-[38px] rounded-lg text-xs font-semibold inline-flex items-center gap-1.5 cursor-pointer transition-colors"
+                >
+                  <Eraser className="w-3.5 h-3.5 text-[#94a3b8]" />
+                  Pulisci Schermata
+                </button>
               </div>
 
               {(isScraping || progressStatus) && (

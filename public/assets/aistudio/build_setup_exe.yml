@@ -1,0 +1,40 @@
+name: Compila Installer Windows (Setup_CasaLavoroOutreach.exe)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build-windows-installer:
+    runs-on: windows-latest
+
+    steps:
+      - name: Scarica codice sorgente
+        uses: actions/checkout@v4
+
+      - name: Configura Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Installa dipendenze Python e PyInstaller
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Compila CasaLavoroOutreach.exe
+        run: |
+          pyinstaller CasaLavoroOutreach.spec --clean --noconfirm
+          copy /Y dist\CasaLavoroOutreach.exe CasaLavoroOutreach.exe
+
+      - name: Installa Inno Setup e genera Setup_CasaLavoroOutreach.exe
+        run: |
+          choco install innosetup -y
+          "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" CasaLavoroOutreach_Setup.iss
+
+      - name: Pubblica Setup_CasaLavoroOutreach.exe scaricabile
+        uses: actions/upload-artifact@v4
+        with:
+          name: Setup_CasaLavoroOutreach_Windows
+          path: dist_setup/Setup_CasaLavoroOutreach.exe

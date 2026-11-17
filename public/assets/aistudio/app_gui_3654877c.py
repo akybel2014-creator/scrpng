@@ -515,6 +515,10 @@ GUI_HTML_CONTENT = """<!DOCTYPE html>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"></rect></svg>
             Interrompi
           </button>
+
+          <button id="btnClearView" type="button" class="btn-top" style="height: 38px; border-radius: 8px; padding: 0 14px;" onclick="clearScrapingView()" title="Svuota solo la tabella a schermo senza cancellare i file CSV o Supabase">
+            🧹 Pulisci Schermata
+          </button>
         </div>
 
         <!-- Barra di Avanzamento -->
@@ -1338,6 +1342,26 @@ WhatsApp: ${waPhone}`
       setTimeout(() => {
         document.getElementById('progressPanel').style.display = 'none';
       }, 4000);
+    }
+
+    function clearScrapingView() {
+      artisansData = [];
+      updateArtisansStats();
+      renderArtisansTable();
+
+      const progressPanel = document.getElementById('progressPanel');
+      const progressBarFill = document.getElementById('progressBarFill');
+      const progressCount = document.getElementById('progressCount');
+      const progressStatus = document.getElementById('progressStatus');
+      const limitSelect = document.getElementById('limiteSelect');
+      const currentLimit = limitSelect ? limitSelect.value : '100';
+
+      if (progressPanel) progressPanel.style.display = 'none';
+      if (progressBarFill) progressBarFill.style.width = '0%';
+      if (progressCount) progressCount.textContent = `0 / ${currentLimit}`;
+      if (progressStatus) progressStatus.textContent = 'Pronto per una nuova ricerca.';
+
+      showToast('Schermata di scraping pulita');
     }
 
     // =========================================================================
